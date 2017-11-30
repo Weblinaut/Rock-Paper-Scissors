@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="UTF-8">
+    <title>Rock Paper Scissors</title>
+</head>
+<body>
+
+<div id="game">
+    <div id="wins">0</div>
+    <div id="losses">0</div>
+
+    <div>
+        <p>The computer guessed : <span id="computer">Nothing</span></p>
+    </div>
+    <div>
+        <p>You guessed : <span id="user">Nothing</span></p>
+    </div>
+    <div>
+        <h3 id="result"></h3>
+    </div>
+    <div>
+        <button id="play">Play Again</button>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+
+    function game() {
+        var result = document.getElementById("result");
+        var playButton = document.getElementById("play");
+        var computerGuess = document.getElementById("computer");
+        var userGuess = document.getElementById("user");
+        var winCount = document.getElementById("wins");
+        var lossCount = document.getElementById("losses");
+        var scoreCount = {wins: 0, losses: 0};
+        var userChoice;
+        var computerChoice;
+
+        function setData() {
+            userChoice = prompt("Do you choose rock, paper or scissors?");
+            computerChoice = Math.random();
+
+            if (computerChoice < 0.34) {
+                computerChoice = "rock";
+            } else if(computerChoice <= 0.67) {
+                computerChoice = "paper";
+            } else {
+                computerChoice = "scissors";
+            }
+
+            computerGuess.innerText = computerChoice;
+            userGuess.innerText = userChoice;
+        }
+
+        function compare(choice1, choice2) {
+            if(choice1 === choice2) {
+                return "The result is a tie!";
+            }
+            if(choice1 === "rock") {
+                if(choice2 === "scissors") {
+                    return "rock wins";
+                } else {
+                    return "paper wins";
+                }
+            }
+            if(choice1 === "paper") {
+                if(choice2 === "rock") {
+                    return "paper wins";
+                } else {
+                    if(choice2 === "scissors") {
+                        return "scissors wins";
+                    }
+                }
+                if(choice1 === "scissors") {
+                    if(choice2 === "rock") {
+                        return "rock wins";
+                    } else {
+                        if(choice2 === "paper") {
+                            return "scissors wins";
+                        }
+                    }
+                }
+            }
+        }
+
+
+        function play() {
+            var gameResult = compare(userChoice, computerChoice);
+
+            if (gameResult.indexOf(userChoice) !== -1) {
+                scoreCount.wins ++;
+            } else if (gameResult.indexOf(computerChoice) !== -1) {
+                scoreCount.losses ++;
+            }
+            winCount.innerText = scoreCount.wins;
+            lossCount.innerText = scoreCount.losses;
+            result.innerText = gameResult
+        }
+
+        playButton.addEventListener("click", function() {
+            setData(); play();
+        });
+
+        setData(); play();
+    }
+
+    game();
+
+
+
+
+
+
+
+
+
+
+</script>
+
+</body>
+
+</html>
